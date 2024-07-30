@@ -111,7 +111,7 @@ stdenv.mkDerivation {
 
   nativeCheckInputs = [ procps ] ++ optionals stdenv.buildPlatform.isFreeBSD [ freebsd.locale ];
 
-  doCheck = interactive && !stdenv.isDarwin && !stdenv.isSunOS; # flaky
+  doCheck = interactive && !stdenv.isDarwin && !stdenv.isSunOS && stdenv.buildPlatform == stdenv.hostPlatform; # flaky
 
   checkFlags = optionals (!stdenv.hostPlatform.isMusl && versionOlder version "7") [
     # Test is known to fail on various locales on texinfo-6.8:
