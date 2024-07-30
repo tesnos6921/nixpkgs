@@ -93,13 +93,14 @@ stdenv.mkDerivation {
     ++ optional interactive ncurses;
 
   configureFlags =
-    [ "PERL=${buildPackages.perl}/bin/perl" ]
+    [ "PERL=${buildPackages.perl}/bin/perl"  ]
     # Perl XS modules are difficult to cross-compile and texinfo has pure Perl
     # fallbacks.
     # Also prevent the buildPlatform's awk being used in the texindex script
     ++ optionals crossBuildTools [
       "--enable-perl-xs=no"
       "TI_AWK=${getBin gawk}/bin/awk"
+      "texinfo_cv_sys_iconv_converts_euc_cn=yes"
     ]
     ++ optional stdenv.isSunOS "AWK=${gawk}/bin/awk";
 
@@ -111,7 +112,7 @@ stdenv.mkDerivation {
 
   nativeCheckInputs = [ procps ] ++ optionals stdenv.buildPlatform.isFreeBSD [ freebsd.locale ];
 
-  doCheck = interactive && !stdenv.isDarwin && !stdenv.isSunOS && stdenv.buildPlatform == stdenv.hostPlatform; # flaky
+  doCheck = interactive && !stdenv.isDarwin && !stdenv.isSunOS; # flaky
 
   checkFlags = optionals (!stdenv.hostPlatform.isMusl && versionOlder version "7") [
     # Test is known to fail on various locales on texinfo-6.8:
