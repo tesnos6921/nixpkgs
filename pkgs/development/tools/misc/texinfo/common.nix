@@ -93,13 +93,14 @@ stdenv.mkDerivation {
     ++ optional interactive ncurses;
 
   configureFlags =
-    [ "PERL=${buildPackages.perl}/bin/perl" ]
+    [ "PERL=${buildPackages.perl}/bin/perl"  ]
     # Perl XS modules are difficult to cross-compile and texinfo has pure Perl
     # fallbacks.
     # Also prevent the buildPlatform's awk being used in the texindex script
     ++ optionals crossBuildTools [
       "--enable-perl-xs=no"
       "TI_AWK=${getBin gawk}/bin/awk"
+      "texinfo_cv_sys_iconv_converts_euc_cn=yes"
     ]
     ++ optional stdenv.isSunOS "AWK=${gawk}/bin/awk";
 
