@@ -46,7 +46,9 @@ let
       cp -r ${monorepoSrc}/${baseName} "$out"
     '' else src;
 
-  preConfigure = lib.optionalString (useLLVM && !haveLibc) ''
+  preConfigure = ''
+    cmakeFlagsArray+=(-DCMAKE_ASM_FLAGS="--target=arm-linux-gnueabihf -march=armv6")
+  '' ++ lib.optionalString (useLLVM && !haveLibc) ''
     cmakeFlagsArray+=(-DCMAKE_C_FLAGS="-nodefaultlibs -ffreestanding")
   '';
 in
