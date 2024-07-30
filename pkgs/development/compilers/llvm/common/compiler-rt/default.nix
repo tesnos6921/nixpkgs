@@ -38,7 +38,7 @@ let
   # use clean up the `cmakeFlags` rats nest below.
   haveLibcxx = stdenv.cc.libcxx != null;
   isDarwinStatic = stdenv.hostPlatform.isDarwin && stdenv.hostPlatform.isStatic && lib.versionAtLeast release_version "16";
-  inherit (stdenv.hostPlatform) isMusl isAarch32 isAarch64;
+  inherit (stdenv.hostPlatform) isMusl isAarch64;
 
   baseName = "compiler-rt";
   pname = baseName + lib.optionalString (haveLibc) "-libc";
@@ -51,7 +51,10 @@ let
     '' else src;
 
   preConfigure = lib.optionalString (!haveLibc) ''
-    cmakeFlagsArray+=(-DCMAKE_C_FLAGS="-nodefaultlibs -ffreestanding")
+    cmakeFlagsArray+=(
+      -DCMAKE_C_FLAGS="-nodefaultlibs -ffreestanding"
+      -DCMAKE_ASM_FLAGS="--target=arm-linux-gnueabihf -march=armv6"
+    )
   '';
 in
 
@@ -84,8 +87,6 @@ stdenv.mkDerivation ({
     "-DCOMPILER_RT_DEFAULT_TARGET_ONLY=ON"
     "-DCMAKE_C_COMPILER_TARGET=${stdenv.hostPlatform.config}"
     "-DCMAKE_ASM_COMPILER_TARGET=${stdenv.hostPlatform.config}"
-  ] ++ lib.optionals (isAarch32) [
-    "-DCMAKE_ASM_FLAGS=\"-march=armv6\""
   ] ++ lib.optionals (haveLibc && stdenv.hostPlatform.libc == "glibc") [
     "-DSANITIZER_COMMON_CFLAGS=-I${libxcrypt}/include"
   ] ++ lib.optionals (useLLVM && haveLibc && stdenv.cc.libcxx == libcxx) [
