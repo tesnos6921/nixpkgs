@@ -82,6 +82,7 @@ stdenv.mkDerivation ({
     "-DCOMPILER_RT_DEFAULT_TARGET_ONLY=ON"
     "-DCMAKE_C_COMPILER_TARGET=${stdenv.hostPlatform.config}"
     "-DCMAKE_ASM_COMPILER_TARGET=${stdenv.hostPlatform.config}"
+    -DCOMPILER_RT_BUILD_BUILTINS=OFF
   ] ++ lib.optionals (haveLibc && stdenv.hostPlatform.libc == "glibc") [
     "-DSANITIZER_COMMON_CFLAGS=-I${libxcrypt}/include"
   ] ++ lib.optionals ((useLLVM || bareMetal || isMusl || isAarch64) && (lib.versions.major release_version == "13")) [
@@ -103,7 +104,7 @@ stdenv.mkDerivation ({
   ] ++ lib.optionals (useLLVM && !haveLibc) [
     "-DCMAKE_C_FLAGS=-nodefaultlibs"
   ] ++ lib.optionals (useLLVM) [
-    "-DCOMPILER_RT_BUILD_BUILTINS=ON"
+    #"-DCOMPILER_RT_BUILD_BUILTINS=ON"
     #https://stackoverflow.com/questions/53633705/cmake-the-c-compiler-is-not-able-to-compile-a-simple-test-program
     "-DCMAKE_TRY_COMPILE_TARGET_TYPE=STATIC_LIBRARY"
   ] ++ lib.optionals (bareMetal) [
