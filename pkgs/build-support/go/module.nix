@@ -70,7 +70,7 @@ let
     nativeBuildInputs = (args.nativeBuildInputs or [ ]) ++ [ go git cacert ];
 
     inherit (args) src;
-    inherit (go) GOOS GOARCH;
+    inherit (go) GOOS GOARCH GOARM;
     inherit GO111MODULE GOTOOLCHAIN;
 
     # The following inheritence behavior is not trivial to expect, and some may
@@ -161,7 +161,7 @@ let
   package = stdenv.mkDerivation (args // {
     nativeBuildInputs = [ go ] ++ nativeBuildInputs;
 
-    inherit (go) GOOS GOARCH;
+    inherit (go) GOOS GOARCH GOARM;
 
     GOFLAGS = GOFLAGS
       ++ lib.warnIf (lib.any (lib.hasPrefix "-mod=") GOFLAGS) "use `proxyVendor` to control Go module/vendor behavior instead of setting `-mod=` in GOFLAGS"
