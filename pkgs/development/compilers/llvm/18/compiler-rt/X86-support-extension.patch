@@ -11,6 +11,16 @@ index 3a66dd9c3fb..7efc85d9f9f 100644
    if (WIN32)
      set(i386_SOURCES
        ${i386_SOURCES}
+@@ -542,3 +542,2 @@ arm/chkstk.S
+     ${arm_or_thumb2_base_SOURCES}
+-    ${arm_sync_SOURCES}
+   )
+@@ -552,4 +552,3 @@ set(arm_SOURCES
+     ${arm_or_thumb2_base_SOURCES}
+-    ${arm_sync_SOURCES}
+     ${arm_EABI_SOURCES}
+     ${arm_Thumb1_SOURCES}
+   )
 @@ -723,6 +723,7 @@ else ()
    endif()
  
