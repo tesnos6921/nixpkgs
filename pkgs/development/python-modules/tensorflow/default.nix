@@ -294,7 +294,7 @@ let
     src = fetchFromGitHub {
       owner = "tensorflow";
       repo = "tensorflow";
-      rev = "refs/tags/v${version}";
+      rev = "ac01bdf5c12b36c19794dabcd56fecb6d17394ff";
       hash = "sha256-Rq5pAVmxlWBVnph20fkAwbfy+iuBNlfFy14poDPd5h0=";
     };
 
