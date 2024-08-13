@@ -436,6 +436,11 @@ let
         url = "https://raw.githubusercontent.com/conda-forge/tensorflow-feedstock/0a63c5a962451b4da99a9948323d8b3ed462f461/recipe/patches/0001-Omit-linking-to-layout_proto_cc-if-protobuf-linkage-.patch";
         hash = "sha256-/7buV6DinKnrgfqbe7KKSh9rCebeQdXv2Uj+Xg/083w=";
       })
+      (fetchpatch {
+        name = "tensorflow-python3.12-no-distutil";
+        url = "https://gitlab.archlinux.org/archlinux/packaging/packages/tensorflow/-/raw/fff04b07ca2bc6758f81505cc396c91f7466c08a/tensorflow-2.16.1-python-distutils-removal.patch";
+        hash = "sha256-t+vP8pwCn3D8W2s33QiPm8SjgKVjIxD6cg4kESh1dL4=";
+      })
       ./com_google_absl_add_log.patch
       ./absl_py_argparse_flags.patch
       ./protobuf_python.patch
