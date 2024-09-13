@@ -37,7 +37,6 @@ stdenv.mkDerivation rec {
       hash = "sha256-tOmxbY7kD6kzbBZ2RhQ5gCCpHtu+2gRNa7VUAWdCKu0=";
     })
   ];
-+  ];
 
   nativeBuildInputs = [ pkg-config mandoc ];
   buildInputs = [ popt ];
