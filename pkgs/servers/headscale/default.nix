@@ -7,7 +7,7 @@
 }:
 buildGoModule rec {
   pname = "headscale";
-  version = "0.22.3";
+  version = "0.23.0-rc.1";
 
   src = fetchFromGitHub {
     owner = "juanfont";
@@ -29,13 +29,6 @@ buildGoModule rec {
   checkFlags = ["-short"];
 
   tags = ["ts2019"];
-
-  postInstall = ''
-    installShellCompletion --cmd headscale \
-      --bash <($out/bin/headscale completion bash) \
-      --fish <($out/bin/headscale completion fish) \
-      --zsh <($out/bin/headscale completion zsh)
-  '';
 
   passthru.tests = { inherit (nixosTests) headscale; };
 
