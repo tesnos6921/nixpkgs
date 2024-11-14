@@ -66,7 +66,7 @@ stdenv.mkDerivation (finalAttrs: {
   version = "4.20.1";
 
   src = fetchurl {
-    url = "mirror://samba/pub/samba/stable/samba-${finalAttrs.version}.tar.gz";
+    url = "mirror://samba/pub/samba/stable/${finalAttrs.pname}-${finalAttrs.version}.tar.gz";
     hash = "sha256-+Tw69SlTQNCBBsfA3PuF5PhQV9/RRYeqiBe+sxr/iPc=";
   };
 
@@ -173,8 +173,6 @@ stdenv.mkDerivation (finalAttrs: {
     ++ optional (!enablePam) "--without-pam"
     ++ optionals (stdenv.hostPlatform != stdenv.buildPlatform) [
     "--bundled-libraries=!asn1_compile,!compile_et"
-    "--cross-compile"
-    "--cross-execute=${stdenv.hostPlatform.emulator buildPackages}"
   ] ++ optionals stdenv.buildPlatform.is32bit [
     # By default `waf configure` spawns as many as available CPUs. On
     # 32-bit systems with many CPUs (like `i686` chroot on `x86_64`
@@ -255,7 +253,7 @@ stdenv.mkDerivation (finalAttrs: {
 
   meta = with lib; {
     homepage = "https://www.samba.org";
-    description = "Standard Windows interoperability suite of programs for Linux and Unix";
+    description = "The standard Windows interoperability suite of programs for Linux and Unix";
     license = licenses.gpl3;
     platforms = platforms.unix;
     broken = enableGlusterFS;
