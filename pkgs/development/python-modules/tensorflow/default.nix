@@ -180,7 +180,7 @@ let
 
   tfFeature = x: if x then "1" else "0";
 
-  version = "2.13.0";
+  version = "2.18.0";
   format = "setuptools";
   variant = lib.optionalString cudaSupport "-gpu";
   pname = "tensorflow${variant}";
@@ -607,7 +607,6 @@ in
 buildPythonPackage {
   __structuredAttrs = true;
   inherit version pname;
-  disabled = pythonAtLeast "3.12";
 
   src = bazel-build.python;
 
